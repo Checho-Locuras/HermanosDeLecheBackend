@@ -1,4 +1,5 @@
 using System.Text;
+using System.IdentityModel.Tokens.Jwt;
 using HermanosDeLeche.Api.Middleware;
 using HermanosDeLeche.Domain.Configuration;
 using HermanosDeLeche.Service;
@@ -49,6 +50,7 @@ var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
+        options.MapInboundClaims = false;
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
@@ -58,7 +60,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidIssuer = jwtSettings.Issuer,
             ValidAudience = jwtSettings.Audience,
             IssuerSigningKey = signingKey,
-            ClockSkew = TimeSpan.FromMinutes(2)
+            ClockSkew = TimeSpan.FromMinutes(2),
+            NameClaimType = JwtRegisteredClaimNames.Sub
         };
     });
 
