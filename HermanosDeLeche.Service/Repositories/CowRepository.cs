@@ -108,6 +108,26 @@ public sealed class CowRepository : ICowRepository
         return affected > 0;
     }
 
+    public async Task<IReadOnlyList<Cow>> ListFedByMilkmanAsync(Guid milkmanId, CancellationToken ct = default)
+    {
+        await using var conn = _connectionFactory.Create();
+        await conn.OpenAsync(ct);
+        await using var cmd = new NpgsqlCommand(
+            """
+            SELECT DISTINCT ON (c.id) c.id, c.milkman_id, c.nombre, c.foto_url, c.tamano, c.peso, c.color, c.edad, c.ciudad, c.descripcion, c.fecha_registro
+            FROM cows c
+            INNER JOIN cow_milk_intakes i ON i.cow_id = c.id AND i.milkman_id = @milkman_id
+            ORDER BY c.id, c.fecha_registro DESC
+            """,
+            conn);
+        cmd.Parameters.AddWithValue("milkman_id", milkmanId);
+        await using var reader = await cmd.ExecuteReaderAsync(ct);
+        var list = new List<Cow>();
+        while (await reader.ReadAsync(ct))
+            list.Add(Map(reader));
+        return list;
+    }
+
     public async Task<bool> DeleteAsync(Guid id, CancellationToken ct = default)
     {
         await using var conn = _connectionFactory.Create();

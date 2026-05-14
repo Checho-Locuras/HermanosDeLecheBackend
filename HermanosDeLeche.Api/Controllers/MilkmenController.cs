@@ -1,4 +1,5 @@
 using HermanosDeLeche.Api.Security;
+using HermanosDeLeche.Domain.Exceptions;
 using HermanosDeLeche.Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,11 +12,13 @@ public sealed class MilkmenController : ControllerBase
 {
     private readonly IMilkmanService _milkmen;
     private readonly IMilkBrotherService _milkBrothers;
+    private readonly ICowService _cows;
 
-    public MilkmenController(IMilkmanService milkmen, IMilkBrotherService milkBrothers)
+    public MilkmenController(IMilkmanService milkmen, IMilkBrotherService milkBrothers, ICowService cows)
     {
         _milkmen = milkmen;
         _milkBrothers = milkBrothers;
+        _cows = cows;
     }
 
     [HttpGet]
@@ -32,6 +35,17 @@ public sealed class MilkmenController : ControllerBase
     {
         var me = User.GetMilkmanId();
         var list = await _milkBrothers.GetMyMilkBrothersAsync(me, ct);
+        return Ok(list);
+    }
+
+    [HttpGet("cows/{idUser:guid}")]
+    [Authorize]
+    public async Task<IActionResult> CowsFedByMilkman(Guid idUser, CancellationToken ct)
+    {
+        if (idUser != User.GetMilkmanId())
+            throw new AppException("Solo puedes consultar tus propias vacas lechadas.", 403);
+
+        var list = await _cows.ListFedByMilkmanAsync(idUser, ct);
         return Ok(list);
     }
 

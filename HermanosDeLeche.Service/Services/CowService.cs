@@ -75,6 +75,12 @@ public sealed class CowService : ICowService
         if (!ok) throw new AppException("No se pudo eliminar la vaca.", 409);
     }
 
+    public async Task<IReadOnlyList<CowResponse>> ListFedByMilkmanAsync(Guid milkmanId, CancellationToken ct = default)
+    {
+        var list = await _cows.ListFedByMilkmanAsync(milkmanId, ct);
+        return list.Select(Map).ToList();
+    }
+
     private static CowResponse Map(Cow cow) => new()
     {
         Id = cow.Id,
