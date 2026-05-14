@@ -3,6 +3,7 @@ using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using HermanosDeLeche.Api.Middleware;
 using HermanosDeLeche.Domain.Configuration;
+using HermanosDeLeche.Domain.DTOs.Common;
 using HermanosDeLeche.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -127,7 +128,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapGet("/health", () => Results.Ok(new { status = "ok" }))
-    .WithTags("Health");
+app.MapGet("/health", () => Results.Ok(new HealthStatusResponse()))
+    .WithTags("Health")
+    .Produces<HealthStatusResponse>(StatusCodes.Status200OK);
 
 app.Run();

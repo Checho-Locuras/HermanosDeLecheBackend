@@ -1,4 +1,5 @@
 using HermanosDeLeche.Api.Security;
+using HermanosDeLeche.Domain.DTOs.Common;
 using HermanosDeLeche.Domain.DTOs.Intake;
 using HermanosDeLeche.Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -19,6 +20,7 @@ public sealed class IntakesController : ControllerBase
 
     [HttpGet]
     [AllowAnonymous]
+    [ProducesResponseType(typeof(List<IntakeResponse>), StatusCodes.Status200OK)]
     public async Task<IActionResult> List(CancellationToken ct)
     {
         var list = await _intakes.ListAsync(ct);
@@ -27,6 +29,7 @@ public sealed class IntakesController : ControllerBase
 
     [HttpGet("cow/{cowId:guid}")]
     [AllowAnonymous]
+    [ProducesResponseType(typeof(List<IntakeResponse>), StatusCodes.Status200OK)]
     public async Task<IActionResult> ByCow(Guid cowId, CancellationToken ct)
     {
         var list = await _intakes.ListByCowAsync(cowId, ct);
@@ -35,6 +38,7 @@ public sealed class IntakesController : ControllerBase
 
     [HttpGet("milkman/{milkmanId:guid}")]
     [AllowAnonymous]
+    [ProducesResponseType(typeof(List<IntakeResponse>), StatusCodes.Status200OK)]
     public async Task<IActionResult> ByMilkman(Guid milkmanId, CancellationToken ct)
     {
         var list = await _intakes.ListByMilkmanAsync(milkmanId, ct);
@@ -43,11 +47,20 @@ public sealed class IntakesController : ControllerBase
 
     [HttpPost]
     [Authorize]
+    [ProducesResponseType(typeof(CreateIntakeSuccessResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Create([FromBody] CreateIntakeRequest request, CancellationToken ct)
     {
         if (!ModelState.IsValid) return ValidationProblem(ModelState);
         var milkmanId = User.GetMilkmanId();
         var created = await _intakes.CreateAsync(milkmanId, request, ct);
-        return StatusCode(StatusCodes.Status201Created, created);
+        var body = new CreateIntakeSuccessResponse
+        {
+            Message = "Vaca lechada con éxito. Ingesta registrada.",
+            Intake = created
+        };
+        return StatusCode(StatusCodes.Status201Created, body);
     }
 }

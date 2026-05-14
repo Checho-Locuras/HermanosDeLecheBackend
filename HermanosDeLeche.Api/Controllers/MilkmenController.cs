@@ -1,4 +1,7 @@
 using HermanosDeLeche.Api.Security;
+using HermanosDeLeche.Domain.DTOs.Common;
+using HermanosDeLeche.Domain.DTOs.Cow;
+using HermanosDeLeche.Domain.DTOs.Milkman;
 using HermanosDeLeche.Domain.Exceptions;
 using HermanosDeLeche.Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -23,6 +26,7 @@ public sealed class MilkmenController : ControllerBase
 
     [HttpGet]
     [AllowAnonymous]
+    [ProducesResponseType(typeof(List<MilkmanResponse>), StatusCodes.Status200OK)]
     public async Task<IActionResult> List(CancellationToken ct)
     {
         var list = await _milkmen.ListAsync(ct);
@@ -31,6 +35,8 @@ public sealed class MilkmenController : ControllerBase
 
     [HttpGet("hermanos-de-leche")]
     [Authorize]
+    [ProducesResponseType(typeof(List<MilkBrotherResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> MyMilkBrothers(CancellationToken ct)
     {
         var me = User.GetMilkmanId();
@@ -40,6 +46,9 @@ public sealed class MilkmenController : ControllerBase
 
     [HttpGet("cows/{idUser:guid}")]
     [Authorize]
+    [ProducesResponseType(typeof(List<CowResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> CowsFedByMilkman(Guid idUser, CancellationToken ct)
     {
         if (idUser != User.GetMilkmanId())
@@ -51,6 +60,8 @@ public sealed class MilkmenController : ControllerBase
 
     [HttpGet("{id:guid}")]
     [AllowAnonymous]
+    [ProducesResponseType(typeof(MilkmanResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Get(Guid id, CancellationToken ct)
     {
         var m = await _milkmen.GetByIdAsync(id, ct);

@@ -1,3 +1,4 @@
+using HermanosDeLeche.Domain.DTOs.Stats;
 using HermanosDeLeche.Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,7 @@ public sealed class StatsController : ControllerBase
     }
 
     [HttpGet("dashboard")]
+    [ProducesResponseType(typeof(DashboardStatsResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> Dashboard(CancellationToken ct)
     {
         var data = await _stats.GetDashboardAsync(ct);
@@ -24,6 +26,7 @@ public sealed class StatsController : ControllerBase
     }
 
     [HttpGet("top-thirsty-cows")]
+    [ProducesResponseType(typeof(List<RankedCowCountResponse>), StatusCodes.Status200OK)]
     public async Task<IActionResult> TopThirsty(CancellationToken ct)
     {
         var list = await _stats.GetTopThirstyCowsAsync(ct);
@@ -31,6 +34,7 @@ public sealed class StatsController : ControllerBase
     }
 
     [HttpGet("top-milk-consumption")]
+    [ProducesResponseType(typeof(List<RankedCowLitersResponse>), StatusCodes.Status200OK)]
     public async Task<IActionResult> TopConsumption(CancellationToken ct)
     {
         var list = await _stats.GetTopMilkConsumptionAsync(ct);
@@ -38,6 +42,7 @@ public sealed class StatsController : ControllerBase
     }
 
     [HttpGet("top-generous-milkmen")]
+    [ProducesResponseType(typeof(List<RankedMilkmanLitersResponse>), StatusCodes.Status200OK)]
     public async Task<IActionResult> TopGenerous(CancellationToken ct)
     {
         var list = await _stats.GetTopGenerousMilkmensAsync(ct);
