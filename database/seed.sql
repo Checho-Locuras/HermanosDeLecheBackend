@@ -34,14 +34,16 @@ VALUES
     NOW() - INTERVAL '5 days'
 );
 
-INSERT INTO cows (id, milkman_id, nombre, foto_url, raza, edad, ciudad, descripcion, fecha_registro)
+INSERT INTO cows (id, milkman_id, nombre, foto_url, tamano, peso, color, edad, ciudad, descripcion, fecha_registro)
 VALUES
 (
     'b0000001-0000-4000-8000-510000000001',
     'a0000001-0000-4000-8000-000000000001',
     'Lola',
     NULL,
-    'Holstein',
+    'Grande',
+    680.00,
+    'Blanco y negro',
     4,
     'Sogamoso',
     'Le encanta el brebaje directo del balde.',
@@ -52,7 +54,9 @@ VALUES
     'a0000001-0000-4000-8000-000000000001',
     'Brisa',
     NULL,
-    'Jersey',
+    'Mediana',
+    450.00,
+    'Marrón',
     3,
     'Sogamoso',
     'Sedienta nivel campeonato.',
@@ -63,7 +67,9 @@ VALUES
     'a0000002-0000-4000-8000-000000000002',
     'Nube',
     NULL,
-    'Normanda',
+    'Mediana',
+    650.00,
+    'Pinto',
     5,
     'Duitama',
     'Prefiere leche tibia y buena charla.',
@@ -74,7 +80,9 @@ VALUES
     'a0000003-0000-4000-8000-000000000003',
     'Tormenta',
     NULL,
-    'Angus',
+    'Mediana',
+    520.00,
+    'Negro',
     2,
     'Paipa',
     'Apodo cariñoso; es mimada.',

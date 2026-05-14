@@ -21,9 +21,10 @@ API para la plataforma rural‑social (con humor) donde los **lecheros** registr
 En la carpeta `database/`:
 
 1. **`init.sql`** — crea extensiones (si aplica), tablas, claves, índices y reglas `CHECK`.
-2. **`seed.sql`** — datos opcionales de demostración (varios lecheros, vacas e ingestas).
-3. **`seed_3_lecheros_5_vacas.sql`** — 3 lecheros y 5 vacas de demostración (contraseña `Lechero123!` para los tres).
-4. **`verify_schema.sql`** — muestra la base conectada y las tablas en `public` (útil para diagnosticar).
+2. **`migrate_202505_cows_raza_to_metricas.sql`** — bases ya creadas: pasa de `raza` a `tamano`, `peso`, `color` (idempotente en buena medida).
+3. **`seed.sql`** — datos opcionales de demostración (varios lecheros, vacas e ingestas).
+4. **`seed_3_lecheros_5_vacas.sql`** — 3 lecheros y 5 vacas de demostración (contraseña `Lechero123!` para los tres).
+5. **`verify_schema.sql`** — muestra la base conectada y las tablas en `public` (útil para diagnosticar).
 
 #### Aplicar en PostgreSQL (Railway u otro)
 

@@ -25,12 +25,15 @@ CREATE TABLE cows (
     milkman_id UUID NOT NULL REFERENCES milkmen (id) ON DELETE CASCADE,
     nombre VARCHAR(200) NOT NULL,
     foto_url TEXT,
-    raza VARCHAR(100),
+    tamano VARCHAR(100),
+    peso NUMERIC(10, 2),
+    color VARCHAR(100),
     edad INT,
     ciudad VARCHAR(200),
     descripcion TEXT,
     fecha_registro TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    CONSTRAINT chk_cows_edad CHECK (edad IS NULL OR (edad >= 0 AND edad <= 50))
+    CONSTRAINT chk_cows_edad CHECK (edad IS NULL OR (edad >= 0 AND edad <= 50)),
+    CONSTRAINT chk_cows_peso CHECK (peso IS NULL OR (peso > 0 AND peso <= 1500))
 );
 
 CREATE INDEX idx_cows_milkman_id ON cows (milkman_id);

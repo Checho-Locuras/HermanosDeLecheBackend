@@ -20,7 +20,7 @@ public sealed class CowRepository : ICowRepository
         await conn.OpenAsync(ct);
         await using var cmd = new NpgsqlCommand(
             """
-            SELECT id, milkman_id, nombre, foto_url, raza, edad, ciudad, descripcion, fecha_registro
+            SELECT id, milkman_id, nombre, foto_url, tamano, peso, color, edad, ciudad, descripcion, fecha_registro
             FROM cows
             WHERE id = @id
             """,
@@ -37,7 +37,7 @@ public sealed class CowRepository : ICowRepository
         await conn.OpenAsync(ct);
         await using var cmd = new NpgsqlCommand(
             """
-            SELECT id, milkman_id, nombre, foto_url, raza, edad, ciudad, descripcion, fecha_registro
+            SELECT id, milkman_id, nombre, foto_url, tamano, peso, color, edad, ciudad, descripcion, fecha_registro
             FROM cows
             ORDER BY fecha_registro DESC
             """,
@@ -58,15 +58,17 @@ public sealed class CowRepository : ICowRepository
         await conn.OpenAsync(ct);
         await using var cmd = new NpgsqlCommand(
             """
-            INSERT INTO cows (id, milkman_id, nombre, foto_url, raza, edad, ciudad, descripcion, fecha_registro)
-            VALUES (@id, @milkman_id, @nombre, @foto_url, @raza, @edad, @ciudad, @descripcion, @fecha_registro)
+            INSERT INTO cows (id, milkman_id, nombre, foto_url, tamano, peso, color, edad, ciudad, descripcion, fecha_registro)
+            VALUES (@id, @milkman_id, @nombre, @foto_url, @tamano, @peso, @color, @edad, @ciudad, @descripcion, @fecha_registro)
             """,
             conn);
         cmd.Parameters.AddWithValue("id", cow.Id);
         cmd.Parameters.AddWithValue("milkman_id", cow.MilkmanId);
         cmd.Parameters.AddWithValue("nombre", cow.Nombre);
         cmd.Parameters.AddWithValue("foto_url", (object?)cow.FotoUrl ?? DBNull.Value);
-        cmd.Parameters.AddWithValue("raza", (object?)cow.Raza ?? DBNull.Value);
+        cmd.Parameters.AddWithValue("tamano", (object?)cow.Tamano ?? DBNull.Value);
+        cmd.Parameters.AddWithValue("peso", (object?)cow.Peso ?? DBNull.Value);
+        cmd.Parameters.AddWithValue("color", (object?)cow.Color ?? DBNull.Value);
         cmd.Parameters.AddWithValue("edad", (object?)cow.Edad ?? DBNull.Value);
         cmd.Parameters.AddWithValue("ciudad", (object?)cow.Ciudad ?? DBNull.Value);
         cmd.Parameters.AddWithValue("descripcion", (object?)cow.Descripcion ?? DBNull.Value);
@@ -84,7 +86,9 @@ public sealed class CowRepository : ICowRepository
             UPDATE cows
             SET nombre = @nombre,
                 foto_url = @foto_url,
-                raza = @raza,
+                tamano = @tamano,
+                peso = @peso,
+                color = @color,
                 edad = @edad,
                 ciudad = @ciudad,
                 descripcion = @descripcion
@@ -94,7 +98,9 @@ public sealed class CowRepository : ICowRepository
         cmd.Parameters.AddWithValue("id", cow.Id);
         cmd.Parameters.AddWithValue("nombre", cow.Nombre);
         cmd.Parameters.AddWithValue("foto_url", (object?)cow.FotoUrl ?? DBNull.Value);
-        cmd.Parameters.AddWithValue("raza", (object?)cow.Raza ?? DBNull.Value);
+        cmd.Parameters.AddWithValue("tamano", (object?)cow.Tamano ?? DBNull.Value);
+        cmd.Parameters.AddWithValue("peso", (object?)cow.Peso ?? DBNull.Value);
+        cmd.Parameters.AddWithValue("color", (object?)cow.Color ?? DBNull.Value);
         cmd.Parameters.AddWithValue("edad", (object?)cow.Edad ?? DBNull.Value);
         cmd.Parameters.AddWithValue("ciudad", (object?)cow.Ciudad ?? DBNull.Value);
         cmd.Parameters.AddWithValue("descripcion", (object?)cow.Descripcion ?? DBNull.Value);
@@ -118,7 +124,9 @@ public sealed class CowRepository : ICowRepository
         MilkmanId = reader.GetGuid(reader.GetOrdinal("milkman_id")),
         Nombre = reader.GetString(reader.GetOrdinal("nombre")),
         FotoUrl = reader.IsDBNull(reader.GetOrdinal("foto_url")) ? null : reader.GetString(reader.GetOrdinal("foto_url")),
-        Raza = reader.IsDBNull(reader.GetOrdinal("raza")) ? null : reader.GetString(reader.GetOrdinal("raza")),
+        Tamano = reader.IsDBNull(reader.GetOrdinal("tamano")) ? null : reader.GetString(reader.GetOrdinal("tamano")),
+        Peso = reader.IsDBNull(reader.GetOrdinal("peso")) ? null : reader.GetDecimal(reader.GetOrdinal("peso")),
+        Color = reader.IsDBNull(reader.GetOrdinal("color")) ? null : reader.GetString(reader.GetOrdinal("color")),
         Edad = reader.IsDBNull(reader.GetOrdinal("edad")) ? null : reader.GetInt32(reader.GetOrdinal("edad")),
         Ciudad = reader.IsDBNull(reader.GetOrdinal("ciudad")) ? null : reader.GetString(reader.GetOrdinal("ciudad")),
         Descripcion = reader.IsDBNull(reader.GetOrdinal("descripcion")) ? null : reader.GetString(reader.GetOrdinal("descripcion")),

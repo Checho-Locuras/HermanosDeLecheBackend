@@ -36,14 +36,16 @@ VALUES
 )
 ON CONFLICT (id) DO NOTHING;
 
-INSERT INTO cows (id, milkman_id, nombre, foto_url, raza, edad, ciudad, descripcion, fecha_registro)
+INSERT INTO cows (id, milkman_id, nombre, foto_url, tamano, peso, color, edad, ciudad, descripcion, fecha_registro)
 VALUES
 (
     'd2000001-0000-4000-8000-010000000001',
     'd1000001-0000-4000-8000-000000000001',
     'Canela',
     NULL,
-    'Holstein',
+    'Grande',
+    620.50,
+    'Bayo',
     4,
     'Villahermosa',
     'Fan número uno del recipiente metálico.',
@@ -54,7 +56,9 @@ VALUES
     'd1000001-0000-4000-8000-000000000001',
     'Mantequilla',
     NULL,
-    'Jersey',
+    'Mediana',
+    455.00,
+    'Crema',
     3,
     'Villahermosa',
     'Rápida y sin remordimientos.',
@@ -65,7 +69,9 @@ VALUES
     'd1000002-0000-4000-8000-000000000002',
     'Eclipse',
     NULL,
-    'Normanda',
+    'Mediana',
+    610.00,
+    'Gris oscuro',
     5,
     'El Cocuy',
     'Prefiere leche fría de altura.',
@@ -76,7 +82,9 @@ VALUES
     'd1000002-0000-4000-8000-000000000002',
     'Ciruela',
     NULL,
-    'Angus',
+    'Pequeña',
+    380.25,
+    'Rojo cereza',
     2,
     'El Cocuy',
     'Todavía aprende el ritual del balde.',
@@ -87,7 +95,9 @@ VALUES
     'd1000003-0000-4000-8000-000000000003',
     'Motita',
     NULL,
-    'Simmental',
+    'Grande',
+    705.00,
+    'Blanco con manchas',
     6,
     'Soatá',
     'La que manda en el potrero.',

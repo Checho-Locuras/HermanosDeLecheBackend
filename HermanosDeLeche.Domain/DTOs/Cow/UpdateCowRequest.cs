@@ -10,7 +10,13 @@ public sealed class UpdateCowRequest
     public string? FotoUrl { get; set; }
 
     [MaxLength(100)]
-    public string? Raza { get; set; }
+    public string? Tamano { get; set; }
+
+    [Range(0.01, 1500)]
+    public decimal? Peso { get; set; }
+
+    [MaxLength(100)]
+    public string? Color { get; set; }
 
     [Range(0, 50)]
     public int? Edad { get; set; }
