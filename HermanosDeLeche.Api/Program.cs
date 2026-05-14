@@ -32,12 +32,20 @@ builder.Services.AddSwaggerGen(options =>
         Scheme = "bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "JWT Bearer. Ejemplo: eyJhbGciOi..."
+        Description =
+            "Pega solo el JWT (sin la palabra Bearer). Tras login/register copia el valor de \"token\"."
     };
-    options.AddSecurityDefinition("Bearer", jwtScheme);
+    const string bearerId = "Bearer";
+    options.AddSecurityDefinition(bearerId, jwtScheme);
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
-        [jwtScheme] = Array.Empty<string>()
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = bearerId }
+            },
+            Array.Empty<string>()
+        }
     });
 });
 
