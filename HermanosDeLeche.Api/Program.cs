@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using HermanosDeLeche.Api.Middleware;
@@ -62,6 +63,30 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = signingKey,
             ClockSkew = TimeSpan.FromMinutes(2),
             NameClaimType = JwtRegisteredClaimNames.Sub
+        };
+        options.Events = new JwtBearerEvents
+        {
+            OnTokenValidated = context =>
+            {
+                if (context.Principal?.Identity is not ClaimsIdentity id)
+                    return Task.CompletedTask;
+
+                var hasSub = id.HasClaim(static c => c.Type == JwtRegisteredClaimNames.Sub || c.Type == "sub");
+                if (hasSub)
+                    return Task.CompletedTask;
+
+                var sub = context.SecurityToken switch
+                {
+                    JwtSecurityToken j => j.Subject,
+                    Microsoft.IdentityModel.JsonWebTokens.JsonWebToken jw => jw.Subject,
+                    _ => null
+                };
+
+                if (!string.IsNullOrEmpty(sub))
+                    id.AddClaim(new Claim(JwtRegisteredClaimNames.Sub, sub));
+
+                return Task.CompletedTask;
+            }
         };
     });
 
