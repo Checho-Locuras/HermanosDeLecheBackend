@@ -75,7 +75,7 @@ Solo HTTP:
 dotnet run --project HermanosDeLeche.Api\HermanosDeLeche.Api.csproj --launch-profile http
 ```
 
-- Swagger UI: `https://localhost:7217/swagger` o `http://localhost:5190/swagger` (revisa `HermanosDeLeche.Api/Properties/launchSettings.json`).
+- Swagger UI: `https://localhost:7288/swagger` o `http://localhost:5288/swagger` (puertos en `Properties/launchSettings.json`). Si ves *address already in use*, cierra otra instancia de `dotnet run` o cambia esos puertos.
 - Healthcheck: `GET /health`
 
 ### Docker
