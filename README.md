@@ -101,7 +101,7 @@ Ajusta `ConnectionStrings__Default` en `docker-compose.yml` para que el contened
 | Área | Método | Ruta |
 |------|--------|------|
 | Auth | POST | `/api/auth/register`, `/api/auth/login` |
-| Lecheros | GET | `/api/milkmen`, `/api/milkmen/{id}` |
+| Lecheros | GET | `/api/milkmen`, `/api/milkmen/{id}`, `/api/milkmen/hermanos-de-leche` (JWT: otros lecheros con vacas en común por ingestas) |
 | Vacas | POST, GET, PUT, DELETE | `/api/cows`, `/api/cows/{id}` |
 | Ingestas | POST, GET | `/api/intakes`, `/api/intakes/cow/{cowId}`, `/api/intakes/milkman/{milkmanId}` |
 | Stats | GET | `/api/stats/dashboard`, `/api/stats/top-thirsty-cows`, `/api/stats/top-milk-consumption`, `/api/stats/top-generous-milkmen` |

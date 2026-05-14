@@ -24,6 +24,7 @@ public static class DependencyInjection
         services.AddScoped<ICowRepository, CowRepository>();
         services.AddScoped<IIntakeRepository, IntakeRepository>();
         services.AddScoped<IStatsRepository, StatsRepository>();
+        services.AddScoped<IMilkBrotherRepository, MilkBrotherRepository>();
 
         services.AddSingleton<JwtTokenIssuer>();
         services.AddScoped<IAuthService, AuthService>();
@@ -31,6 +32,7 @@ public static class DependencyInjection
         services.AddScoped<IIntakeService, IntakeService>();
         services.AddScoped<IMilkmanService, MilkmanService>();
         services.AddScoped<IStatsService, StatsService>();
+        services.AddScoped<IMilkBrotherService, MilkBrotherService>();
 
         return services;
     }
