@@ -1,0 +1,15 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      # Sobrescribe según tu PostgreSQL local o Railway
+      ConnectionStrings__Default: "Host=host.docker.internal;Port=5432;Username=postgres;Password=postgres;Database=hermanos"
+      Jwt__Key: "HermanosDeLeche_LocalDev_SuperSecret_ChangeMe_32chars!!"
+      Jwt__Issuer: "HermanosDeLeche"
+      Jwt__Audience: "HermanosDeLeche"
+      Jwt__ExpiryMinutes: "10080"

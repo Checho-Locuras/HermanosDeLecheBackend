@@ -1,0 +1,12 @@
+## Artefactos de compilación y paquetes NuGet
+**/bin/
+**/obj/
+
+## IDE / tooling
+.vs/
+.idea/
+*.user
+*.suo
+
+## Proyecto temporal local (puede ignorarse si reaparece)
+TempHash/

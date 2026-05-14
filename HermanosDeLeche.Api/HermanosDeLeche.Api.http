@@ -1,0 +1,6 @@
+@HermanosDeLeche.Api_HostAddress = http://localhost:5190
+
+GET {{HermanosDeLeche.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
