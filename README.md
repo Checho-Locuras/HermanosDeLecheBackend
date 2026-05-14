@@ -1,11 +1,11 @@
-## Hermanos de Leche — Backend (.NET 8)
+## Hermanos de Leche — Backend (.NET 10)
 
 API para la plataforma rural‑social (con humor) donde los **lecheros** registran qué **vacas** han tomado su leche, el historial y estadísticas agregadas.
 
 ### Requisitos
 
-- [.NET SDK 8.0](https://dotnet.microsoft.com/download/dotnet/8.0) o superior compatible con `net8.0` **para compilar**
-- Para **ejecutar** la API (`net8.0`) hace falta el runtime compartido **ASP.NET Core 8** (`Microsoft.AspNetCore.App`), no solo el runtime base de .NET. En Windows: `winget install Microsoft.DotNet.AspNetCore.8` (o instala el SDK 8 completo, que ya lo incluye).
+- [.NET SDK 10.0](https://dotnet.microsoft.com/download/dotnet/10.0) **para compilar** (`net10.0`)
+- Para **ejecutar** sin SDK basta el runtime **ASP.NET Core 10** (`Microsoft.AspNetCore.App`). En Windows: `winget install Microsoft.DotNet.AspNetCore.10` (o el SDK 10, que ya lo incluye).
 - PostgreSQL accesible desde tu máquina (Railway, Docker o local)
 
 ### Estructura de la solución
@@ -90,7 +90,7 @@ Ajusta `ConnectionStrings__Default` en `docker-compose.yml` para que el contened
 
 1. Crea un servicio **PostgreSQL** y obtén la URL pública.
 2. Ejecuta `database/init.sql` y opcionalmente `seed.sql` contra esa base.
-3. Crea un servicio **Web** desde este repo (Dockerfile o Nixpacks con .NET 8).
+3. Crea un servicio **Web** desde este repo (Dockerfile o Nixpacks con .NET 10).
 4. Variables de entorno recomendadas:
    - `ConnectionStrings__Default` = cadena Npgsql completa (`Host=...;Port=...;Username=...;Password=...;Database=...;SSL Mode=Require;Trust Server Certificate=true`).
    - `Jwt__Key` = clave larga (≥ 32 caracteres).
@@ -116,4 +116,4 @@ Ajusta `ConnectionStrings__Default` en `docker-compose.yml` para que el contened
 
 ### Tecnologías
 
-.NET 8, PostgreSQL, Npgsql (ADO.NET directo: `NpgsqlConnection`, `NpgsqlCommand`, `NpgsqlDataReader`), Swagger, JWT Bearer, BCrypt para contraseñas, middleware global de excepciones.
+.NET 10, PostgreSQL, Npgsql (ADO.NET directo: `NpgsqlConnection`, `NpgsqlCommand`, `NpgsqlDataReader`), Swagger, JWT Bearer, BCrypt para contraseñas, middleware global de excepciones.
