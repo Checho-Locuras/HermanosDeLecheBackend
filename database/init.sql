@@ -1,5 +1,7 @@
 -- Hermanos de Leche - esquema inicial (PostgreSQL)
--- Ejecutar contra la base de datos objetivo (ej. Railway: railway)
+-- IMPORTANTE (Railway): ejecuta este script estando conectado a la base **railway**.
+-- Si te conectas a la base por defecto **postgres**, está vacía y no verás estas tablas.
+-- En psql: \c railway   |   En la URL: .../railway al final (no .../postgres).
 
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 

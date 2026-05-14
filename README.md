@@ -21,7 +21,9 @@ API para la plataforma rural‑social (con humor) donde los **lecheros** registr
 En la carpeta `database/`:
 
 1. **`init.sql`** — crea extensiones (si aplica), tablas, claves, índices y reglas `CHECK`.
-2. **`seed.sql`** — datos opcionales de demostración.
+2. **`seed.sql`** — datos opcionales de demostración (varios lecheros, vacas e ingestas).
+3. **`seed_3_lecheros_5_vacas.sql`** — 3 lecheros y 5 vacas de demostración (contraseña `Lechero123!` para los tres).
+4. **`verify_schema.sql`** — muestra la base conectada y las tablas en `public` (útil para diagnosticar).
 
 #### Aplicar en PostgreSQL (Railway u otro)
 
@@ -32,7 +34,9 @@ psql "postgresql://postgres:TU_PASSWORD@TU_HOST:TU_PUERTO/railway" -f database/i
 psql "postgresql://postgres:TU_PASSWORD@TU_HOST:TU_PUERTO/railway" -f database/seed.sql
 ```
 
-En el cliente web de Railway: pestaña **Query** / **Data** → pega y ejecuta primero `init.sql`, luego (opcional) `seed.sql`.
+En el cliente web de Railway: pestaña **Query** / **Data** → elige la base de datos **`railway`** (no la plantilla **`postgres`**, que suele estar vacía). Luego pega y ejecuta `init.sql` y los seeds que necesites.
+
+**¿No ves tablas?** Comprueba el nombre de la base en la URL (`...postgresql://...@host:puerto/**railway**`) o en variables `PGDATABASE` / `DATABASE_URL`. La API de este repo usa **`Database=railway`** en la cadena Npgsql.
 
 #### Usuarios de demostración (`seed.sql`)
 
